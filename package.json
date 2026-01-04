@@ -11,13 +11,13 @@
     "server": "npx tsx watch server/index.ts",
     "start": "NODE_ENV=production npx tsx server/index.ts",
     "build": "node scripts/set-provider.js postgresql && npx prisma generate && npm run type-check && npm run build-only",
-    "prisma:seed": "npx tsx prisma/seed.ts"
+    "prisma:seed": "npx tsx prisma/seed.ts",
+    "preview": "vite preview",
+    "build-only": "vite build",
+    "type-check": "vue-tsc --build",
+    "lint": "eslint . --fix --cache",
+    "format": "prettier --write --experimental-cli src/"
   },
-  "preview": "vite preview",
-  "build-only": "vite build",
-  "type-check": "vue-tsc --build",
-  "lint": "eslint . --fix --cache",
-  "format": "prettier --write --experimental-cli src/",
   "dependencies": {
     "@prisma/client": "^6.19.1",
     "body-parser": "^2.2.1",
