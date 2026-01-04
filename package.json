@@ -10,7 +10,7 @@
     "dev": "concurrently \"npm run server\" \"vite\"",
     "server": "npx tsx watch server/index.ts",
     "start": "NODE_ENV=production npx tsx server/index.ts",
-    "build": "node scripts/set-provider.js postgresql && npx prisma generate && run-p type-check \"build-only {@}\" --",
+    "build": "node scripts/set-provider.js postgresql && npx prisma generate && npm run type-check && npm run build-only",
     "prisma:seed": "npx tsx prisma/seed.ts"
   },
   "preview": "vite preview",
