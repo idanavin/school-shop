@@ -1,0 +1,62 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id    Int    @id @default(autoincrement())
+  name  String
+  items Item[]
+}
+
+model Item {
+  id           Int         @id @default(autoincrement())
+  category     Category    @relation(fields: [categoryId], references: [id])
+  categoryId   Int
+  name_he      String
+  name_en      String
+  price        Float
+  has_toppings Boolean     @default(false)
+  max_toppings Int         @default(0)
+  stock        Int?        // Null = unlimited
+  is_hidden    Boolean     @default(false)
+  orderItems   OrderItem[]
+  toppings     Topping[]
+}
+
+model Topping {
+  id      Int    @id @default(autoincrement())
+  name_he String
+  name_en String
+  price   Float  @default(0)
+  items   Item[]
+}
+
+model Order {
+  id            Int         @id @default(autoincrement())
+  student_name  String
+  student_class String
+  student_phone String
+  status        String      @default("pending") // pending, ready, completed, cancelled
+  total_price   Float       @default(0)
+  created_at    DateTime    @default(now())
+  items         OrderItem[]
+}
+
+model OrderItem {
+  id       Int    @id @default(autoincrement())
+  order    Order  @relation(fields: [orderId], references: [id])
+  orderId  Int
+  item     Item   @relation(fields: [itemId], references: [id])
+  itemId   Int
+  quantity Int    @default(1)
+  toppings String? // JSON string of topping IDs or names
+}
+
